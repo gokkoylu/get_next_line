@@ -14,16 +14,16 @@ static int	read_line(char **ret, int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (1);
+			return (free(buffer), 1);
 		if (bytes_read == 0)
-			return (0);
+			return (free(buffer), 0);
 		buffer[bytes_read] = '\0';
 		if (gk_strjoin(ret, buffer))
-			return (1);
+			return (free(buffer), 1);
 		if (gk_strchr(*ret, '\n'))
-			return (0);
+			return (free(buffer), 0);
 	}
-	return (0);
+	return (free(buffer), 0);
 }
 
 static int	cut_line(char **mem, char **ret)
@@ -60,7 +60,7 @@ char	*get_next_line(int fd)
 	char		test[1];
 	char		*ret;
 
-	if (fd < 0 || BUFFER_SIZE > 2147483647
+	if (fd < 0 || BUFFER_SIZE >= 2147483647
 		|| BUFFER_SIZE < 1 || read(fd, test, 0) == -1)
 	{
 		if (mem)
