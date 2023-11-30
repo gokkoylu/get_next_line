@@ -1,14 +1,15 @@
-
-
 #include "get_next_line.h"
 
 static int	read_line(char **ret, int fd)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	ssize_t	bytes_read;
 
 	if (gk_strchr(*ret, '\n'))
 		return (0);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (1);
 	while (1)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);

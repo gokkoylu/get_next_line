@@ -1,5 +1,3 @@
-
-
 #include "get_next_line.h"
 
 size_t	gk_strlen(char *s, int delim)
